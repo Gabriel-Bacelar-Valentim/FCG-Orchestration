@@ -1,0 +1,118 @@
+﻿rabbitmq:
+  image: rabbitmq:3-management
+  container_name: rabbitmq
+  ports:
+    - "5672:5672" 
+    - "15672:15672"
+  environment:
+    RABBITMQ_DEFAULT_USER: guest
+    RABBITMQ_DEFAULT_PASS: guest
+  networks:
+    - app-network
+
+  users-api:
+    build:
+      context: . 
+      dockerfile: FCG.Users/UsersAPI/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - rabbitmq
+    environment:
+      - MASSTRANSIT_LICENSE_KEY=None
+      - MT_LICENSE_KEY=None
+    networks:
+      - app-network
+
+  users-db:
+    image: postgres:15
+    container_name: users-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: usersdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - users-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  catalog-api:
+    build:
+      context: .
+      dockerfile: FCG.Catalog/CatalogAPI/Dockerfile
+    ports:
+      - "5202:8080"
+    depends_on:
+      - rabbitmq
+    environment:
+      - MASSTRANSIT_LICENSE_KEY=None
+      - MT_LICENSE_KEY=None
+    networks:
+      - app-network
+
+  catalog-db:
+    image: postgres:15
+    container_name: catalog-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: catalogdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - catalog-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  payments-api:
+    build:
+      context: .
+      dockerfile: FCG.Payments/PaymentsAPI/Dockerfile
+    ports:
+      - "5158:8080"
+    depends_on:
+      - rabbitmq
+    environment:
+      - MASSTRANSIT_LICENSE_KEY=None
+      - MT_LICENSE_KEY=None
+    networks:
+      - app-network
+
+  payments-db:
+    image: postgres:15
+    container_name: payments-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: paymentsdb
+    ports:
+      - "5434:5432"
+    volumes:
+      - payments-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  notifications-api:
+    build:
+      context: .
+      dockerfile: FCG.Notifications/NotificationsAPI/Dockerfile
+    ports:
+      - "5241:8080"
+    depends_on:
+      - rabbitmq
+    environment:
+      - MASSTRANSIT_LICENSE_KEY=None
+      - MT_LICENSE_KEY=None
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  users-data:
+  catalog-data:
+  payments-data:
