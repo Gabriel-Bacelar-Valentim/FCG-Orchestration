@@ -1,18 +1,21 @@
-﻿rabbitmq:
-  image: rabbitmq:3-management
-  container_name: rabbitmq
-  ports:
-    - "5672:5672" 
-    - "15672:15672"
-  environment:
-    RABBITMQ_DEFAULT_USER: guest
-    RABBITMQ_DEFAULT_PASS: guest
-  networks:
-    - app-network
+﻿version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672" 
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - app-network
 
   users-api:
     build:
-      context: . 
+      context: .. 
       dockerfile: FCG.Users/UsersAPI/Dockerfile
     ports:
       - "8080:8080"
@@ -40,7 +43,7 @@
 
   catalog-api:
     build:
-      context: .
+      context: ..
       dockerfile: FCG.Catalog/CatalogAPI/Dockerfile
     ports:
       - "5202:8080"
@@ -68,7 +71,7 @@
 
   payments-api:
     build:
-      context: .
+      context: ..
       dockerfile: FCG.Payments/PaymentsAPI/Dockerfile
     ports:
       - "5158:8080"
@@ -96,7 +99,7 @@
 
   notifications-api:
     build:
-      context: .
+      context: ..
       dockerfile: FCG.Notifications/NotificationsAPI/Dockerfile
     ports:
       - "5241:8080"

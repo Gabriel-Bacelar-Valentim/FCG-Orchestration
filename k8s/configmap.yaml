@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fcg-config
+data:
+  ASPNETCORE_ENVIRONMENT: "Development"
+  RabbitMq__Host: "host.docker.internal" # Aponta para o RabbitMQ no Docker
