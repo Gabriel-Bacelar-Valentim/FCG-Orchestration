@@ -1,4 +1,5 @@
 ﻿using FCG.Domain.Entities.UserEntity;
+using FCG.Infrastructure.Data.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 namespace FCG.Infrastructure.Data
@@ -12,8 +13,7 @@ namespace FCG.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(FcgDbContext).Assembly);
+            modelBuilder.ApplyConfiguration(new UserMapping());
         }
     }
 }

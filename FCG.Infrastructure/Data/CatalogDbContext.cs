@@ -1,6 +1,6 @@
 ﻿using FCG.Domain.Entities.GameEntity;
+using FCG.Infrastructure.Data.Mappings;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 namespace FCG.Infrastructure.Data
 {
@@ -12,8 +12,8 @@ namespace FCG.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new GameMapping());
         }
     }
 }
