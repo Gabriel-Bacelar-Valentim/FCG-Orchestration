@@ -27,3 +27,6 @@ packages/
 
 # Pastas de saída de testes
 TestResults/
+
+# Kubernets
+*.local.yaml

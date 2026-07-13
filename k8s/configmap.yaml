@@ -4,4 +4,4 @@ metadata:
   name: fcg-config
 data:
   ASPNETCORE_ENVIRONMENT: "Development"
-  RabbitMq__Host: "host.docker.internal" # Aponta para o RabbitMQ no Docker
+  RabbitMq__Host: "host.docker.internal"

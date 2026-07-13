@@ -14,6 +14,7 @@ services:
       - app-network
 
   users-api:
+    image: fcg-users-api:latest
     build:
       context: .. 
       dockerfile: FCG.Users/UsersAPI/Dockerfile
@@ -42,6 +43,7 @@ services:
       - app-network
 
   catalog-api:
+    image: fcg-catalog-api:latest
     build:
       context: ..
       dockerfile: FCG.Catalog/CatalogAPI/Dockerfile
@@ -70,6 +72,7 @@ services:
       - app-network
 
   payments-api:
+    image: fcg-payments-api:latest
     build:
       context: ..
       dockerfile: FCG.Payments/PaymentsAPI/Dockerfile
@@ -98,6 +101,7 @@ services:
       - app-network
 
   notifications-api:
+    image: fcg-notifications-api:latest
     build:
       context: ..
       dockerfile: FCG.Notifications/NotificationsAPI/Dockerfile
