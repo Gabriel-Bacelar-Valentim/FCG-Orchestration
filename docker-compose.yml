@@ -8,8 +8,8 @@ services:
       - "5672:5672" 
       - "15672:15672"
     environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
     networks:
       - app-network
 
@@ -25,6 +25,8 @@ services:
     environment:
       - MASSTRANSIT_LICENSE_KEY=None
       - MT_LICENSE_KEY=None
+      - RABBITMQ_HOST=rabbitmq
+      - DB_CONNECTION_STRING=Host=users-db;Port=5432;Database=usersdb;Username=admin;Password=${DB_PASSWORD}
     networks:
       - app-network
 
@@ -33,7 +35,7 @@ services:
     container_name: users-db
     environment:
       POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password123
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: usersdb
     ports:
       - "5432:5432"
@@ -54,6 +56,8 @@ services:
     environment:
       - MASSTRANSIT_LICENSE_KEY=None
       - MT_LICENSE_KEY=None
+      - RABBITMQ_HOST=rabbitmq
+      - DB_CONNECTION_STRING=Host=catalog-db;Port=5432;Database=catalogdb;Username=admin;Password=${DB_PASSWORD}
     networks:
       - app-network
 
@@ -62,7 +66,7 @@ services:
     container_name: catalog-db
     environment:
       POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password123
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: catalogdb
     ports:
       - "5433:5432"
@@ -83,6 +87,8 @@ services:
     environment:
       - MASSTRANSIT_LICENSE_KEY=None
       - MT_LICENSE_KEY=None
+      - RABBITMQ_HOST=rabbitmq
+      - DB_CONNECTION_STRING=Host=payments-db;Port=5432;Database=paymentsdb;Username=admin;Password=${DB_PASSWORD}
     networks:
       - app-network
 
@@ -91,7 +97,7 @@ services:
     container_name: payments-db
     environment:
       POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password123
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: paymentsdb
     ports:
       - "5434:5432"
@@ -112,6 +118,7 @@ services:
     environment:
       - MASSTRANSIT_LICENSE_KEY=None
       - MT_LICENSE_KEY=None
+      - RABBITMQ_HOST=rabbitmq
     networks:
       - app-network
 
